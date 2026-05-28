@@ -1,26 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0b0f19;
+  --foreground: #f8fafc;
+  --card-bg: rgba(17, 24, 39, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-color: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.15);
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0b0f19 70%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Micro-animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::after {
+  opacity: 1;
+}
+
+/* Markdown Rendering Custom Styles for manuals */
+.manual-content h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.manual-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.manual-content h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.manual-content p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.manual-content ul, .manual-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  color: #cbd5e1;
+}
+
+.manual-content ul {
+  list-style-type: disc;
+}
+
+.manual-content ol {
+  list-style-type: decimal;
+}
+
+.manual-content li {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+.manual-content code {
+  background: rgba(15, 23, 42, 0.8);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #f43f5e;
+}
+
+.manual-content pre {
+  background: #0f172a;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.manual-content pre code {
+  background: transparent;
+  padding: 0;
+  color: #e2e8f0;
+}
+
+.manual-content blockquote {
+  border-left: 4px solid #6366f1;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.manual-content blockquote p {
+  color: #a5b4fc;
+  margin-bottom: 0;
+  font-size: 0.95rem;
 }

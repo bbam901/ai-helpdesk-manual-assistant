@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  role      String   // "user" | "admin"
+  name      String
+  dept      String
+  createdAt DateTime @default(now())
+}
+
+model Ticket {
+  id                String    @id // e.g., TKT-20260520-001
+  title             String
+  description       String
+  category          String
+  priority          String
+  requesterName     String
+  requesterDept     String
+  status            String    // "open" | "processing" | "resolved"
+  referencedManual  String?
+  aiSuggestedSteps  String[]
+  resolutionComment String?
+  resolverName      String?
+  createdAt         DateTime  @default(now())
+  resolvedAt        DateTime?
+}
+
+model ManualSearchLog {
+  id        Int      @id @default(autoincrement())
+  keyword   String   @unique
+  count     Int      @default(1)
+  updatedAt DateTime @updatedAt
+}
+
+model UploadedManual {
+  id           String   @id @default(uuid())
+  fileName     String   @unique
+  title        String
+  category     String
+  description  String
+  status       String   // "success" | "failed"
+  errorMessage String?
+  createdAt    DateTime @default(now())
+}
+
+model ManualDocument {
+  id            String   @id @default(uuid())
+  filename      String   @unique
+  originalName  String
+  category      String
+  description   String
+  filePath      String
+  extractedText String
+  parsedStatus  String   // "success" | "failed"
+  parseError    String?
+  uploadedBy    String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
